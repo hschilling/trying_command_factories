@@ -53,7 +53,10 @@ public class RobotContainer {
     m_exampleSubsystem.setDefaultCommand(
         new RunCommand(() -> m_exampleSubsystem.exampleMethod(), m_exampleSubsystem));
 
-    // this does not work.
+    // this does not work. A RunCommand is given like the line above
+    // but the lamba function that it runs just creates a command using the
+    // factory method exampleMethodCommand. The Command that it creates
+    // never gets run
     m_exampleSubsystem.setDefaultCommand(
         new RunCommand(() -> m_exampleSubsystem.exampleMethodCommand(),
             m_exampleSubsystem));
