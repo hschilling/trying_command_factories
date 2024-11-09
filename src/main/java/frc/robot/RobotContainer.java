@@ -9,6 +9,7 @@ import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -44,22 +45,26 @@ public class RobotContainer {
   private void configureDefaultCommands() {
     // this works. setDefaultCommand is given a Command instance. The Command
     // prints something
-    m_exampleSubsystem.setDefaultCommand(
-        m_exampleSubsystem.exampleMethodCommand());
+    // m_exampleSubsystem.setDefaultCommand(
+    // m_exampleSubsystem.exampleMethodCommand());
 
     // this works also. setDefaultCommand is given a RunCommand that
     // runs the given lambda
     // function that calls a method that prints something
     m_exampleSubsystem.setDefaultCommand(
-        new RunCommand(() -> m_exampleSubsystem.exampleMethod(), m_exampleSubsystem));
+        new RunCommand(() -> {
+          m_exampleSubsystem.exampleMethod();
+          // System.out.println("print in lambda");
+        }, m_exampleSubsystem));
 
     // this does not work. A RunCommand is given like the line above
     // but the lamba function that it runs just creates a command using the
     // factory method exampleMethodCommand. The Command that it creates
     // never gets run
-    m_exampleSubsystem.setDefaultCommand(
-        new RunCommand(() -> m_exampleSubsystem.exampleMethodCommand(),
-            m_exampleSubsystem));
+    // m_exampleSubsystem.setDefaultCommand(
+    // new RunCommand(() -> m_exampleSubsystem.exampleMethodCommand(),
+    // m_exampleSubsystem));
+
   }
 
   /**
@@ -85,6 +90,12 @@ public class RobotContainer {
     // pressed,
     // cancelling on release.
     m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
+
+    m_driverController.a().whileTrue(
+        Commands.either(
+            Commands.print("is true"),
+            Commands.print("is false"),
+            m_exampleSubsystem.exampleSupplier()));
   }
 
   /**

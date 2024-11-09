@@ -4,9 +4,13 @@
 
 package frc.robot.subsystems;
 
+import java.util.function.BooleanSupplier;
+
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 
 public class ExampleSubsystem extends SubsystemBase {
   /** Creates a new ExampleSubsystem. */
@@ -29,7 +33,15 @@ public class ExampleSubsystem extends SubsystemBase {
   }
 
   public void exampleMethod() {
-    System.out.println("In exampleMethod");
+    // System.out.println("In exampleMethod");
+  }
+
+  public BooleanSupplier exampleSupplier() {
+    System.out.println("inside supplier"); // this only gets executed once
+    return () -> {
+      System.out.println("inside lambda function in supplier");
+      return true;
+    };
   }
 
   /**
